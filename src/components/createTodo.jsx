@@ -2,32 +2,33 @@ import React, {useState, useRef, useEffect, useContext} from 'react'
 import { TodosContext } from '../App'
 const CreateTodo = () => {
 
-      const [data, setdata] = useContext(TodosContext)
-      const { todos, idGenerator } = data;
+      const {dispatch} = useContext(TodosContext)
+      
       const [title, settitle] = useState("")
       const handleChange =(e)=>{
             settitle(e.target.value)
       }
+
+      let date = new Date()
 
       const input_ref = useRef(null);
 
 
       const handleSubmit =(e)=>{
             e.preventDefault()
-            let todo = {id: idGenerator.getMilliseconds(), title,date:idGenerator.toDateString(), is_complete: false}
+            let todo = {id: date.getMilliseconds(), title,date:date.toDateString(), is_complete: false}
 
-            setdata({...data, todos: [...todos, todo]})
+            dispatch({type: 'add', payload:todo})
             input_ref.current.focus()
             settitle("")
       }
 
-      console.log(todos
-            )
+
       useEffect(()=>{
             input_ref.current.focus()
       }, [])
   return (
-      <TodosContext.Provider value={todos}>
+      
         <form className="form" onSubmit={handleSubmit}>
               <input type="text"  
                      className="input-field" 
@@ -39,7 +40,7 @@ const CreateTodo = () => {
               <button type="submit" id="btn" onClick={handleSubmit}>add</button>
 
         </form>
-        </TodosContext.Provider>
+        
   )
 }
 

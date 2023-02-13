@@ -3,13 +3,13 @@ import Todo from './todo'
 import  {TodosContext}  from "../App"
 
 const Todos = () => {
-      const [data, setdata] = useContext(TodosContext)
-      const todos = data.todos
+      const {state} = useContext(TodosContext)
+      
       
   return (
     <div className='todos'>
       
-      {todos.map(todo=> <Todo key={todo.id} todo={todo} todos={todos} />)}
+      {state.map(todo=> <Todo key={todo.id} todo={todo} todos={state} />)}
       
     </div>
   )
